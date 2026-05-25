@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltage Follower / Buffer — Signal Path</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="../../circuit-snippet/dist/circuit-snippet.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Voltage Follower</h1>
+        <p class="subtitle">Unity-gain buffer — same voltage out, but with muscle behind it</p>
+
+        <h2>What It Does</h2>
+        <p>
+            An op-amp with its output wired straight back to the inverting input.
+            Gain is exactly 1&times; — the output voltage follows the input.
+            The point isn't amplification, it's <em>impedance transformation</em>:
+            high input impedance in, low output impedance out.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <ul>
+            <li>Prevents a low-impedance load from dragging down a high-impedance source</li>
+            <li>Isolates circuit stages so they don't interfere with each other</li>
+            <li>Lets sensitive signals (like from a guitar pickup or sensor) drive cables and downstream circuits without signal loss</li>
+        </ul>
+
+        <h2>The Circuit</h2>
+        <p>
+            Input goes to the non-inverting (+) pin. Output connects directly
+            back to the inverting (&minus;) pin — 100% negative feedback.
+            Output tracks input exactly.
+        </p>
+
+        <div class="circuit-embed">
+            <circuit-snippet width="700" height="450" display-time="0.022">
+                <script type="text/xml">
+                    <cir f="1" ts="0.000005" cb="50" pb="50" vr="5" mts="5e-11">
+                      <v x="112 320 112 416" f="0" wf="1" fr="100" maxv="2"/>
+                      <g x="112 416 112 432" f="0"/>
+                      <w x="112 320 304 320" f="0"/>
+                      <a x="304 256 432 256" f="0"/>
+                      <w x="432 256 432 144" f="0"/>
+                      <w x="432 144 240 144" f="0"/>
+                      <w x="240 144 240 192" f="0"/>
+                      <w x="240 192 304 192" f="0"/>
+                      <w x="432 256 528 256" f="0"/>
+                      <O x="528 256 592 256" f="0" sc="0"/>
+                      <o en="2" sp="16" f="x3" p="0">
+                        <p v="0" sc="5"/>
+                        <p e="9" v="0" sc="5"/>
+                      </o>
+                    </cir>
+                </script>
+                <script type="application/json">
+                    {
+                        "controls": [
+                            { "component": "v:0", "param": "frequency", "label": "Frequency", "min": 20, "max": 2000, "scale": "log", "unit": "Hz" }
+                        ]
+                    }
+                </script>
+            </circuit-snippet>
+        </div>
+
+        <h2>Buffer vs Follower</h2>
+        <p>
+            "Voltage follower" and "buffer" mean the same thing in practice.
+            "Follower" describes the behavior (output follows input).
+            "Buffer" describes the purpose (isolate stages).
+            An emitter follower (BJT) does the same job — slightly less
+            precise but no op-amp needed.
+        </p>
+
+        <h2>When You Need One</h2>
+        <ul>
+            <li>Before a long cable run — cable capacitance won't load the source</li>
+            <li>After a potentiometer — so the pot's position doesn't change depending on what's downstream</li>
+            <li>Between a high-impedance sensor/pickup and a low-impedance input</li>
+            <li>At eurorack module outputs — standardizes output impedance (~1k&Omega;)</li>
+        </ul>
+
+        <p><a href="../index.html">&larr; Signal Path</a></p>
+    </main>
+</body>
+</html>

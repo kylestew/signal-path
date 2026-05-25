@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Lowpass Filter — Signal Path</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="../../circuit-snippet/dist/circuit-snippet.js"></script>
+</head>
+<body>
+    <main>
+        <h1>RC Lowpass Filter</h1>
+        <p class="subtitle">Pass lows, cut highs — the simplest filter in analog electronics</p>
+
+        <h2>What It Does</h2>
+        <p>
+            Resistor in series, capacitor to ground. At low frequencies the cap
+            is effectively open, so the signal passes through. At high frequencies
+            the cap is a short to ground and the signal gets shunted away.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <ul>
+            <li>Smooths noisy signals — strips out high-frequency hash</li>
+            <li>Anti-aliasing before an ADC — prevents foldback artifacts</li>
+            <li>Tone control — roll off treble in audio paths</li>
+            <li>Power supply filtering — clean up ripple on DC rails</li>
+        </ul>
+
+        <h2>The Circuit</h2>
+        <p>
+            Signal passes through the resistor, then the capacitor shunts
+            high frequencies to ground. Output is taken across the capacitor.
+        </p>
+
+        <div class="circuit-embed">
+            <circuit-snippet width="700" height="450" display-time="0.022">
+                <script type="text/xml">
+                    <cir f="1" ts="0.000005" ic="10.20027730826997" cb="50" pb="50" vr="5" mts="5e-11">
+                      <v x="96 176 96 272" f="0" wf="1" fr="100" maxv="2"/>
+                      <g x="96 272 96 288" f="0"/>
+                      <w x="96 176 192 176" f="0"/>
+                      <r x="192 176 320 176" f="0" r="1000"/>
+                      <w x="320 176 416 176" f="0"/>
+                      <c x="320 176 320 272" f="0" c="0.00001"/>
+                      <g x="320 272 320 288" f="0"/>
+                      <O x="416 176 480 176" f="0" sc="0"/>
+                      <o en="2" sp="16" f="x3" p="0">
+                        <p v="0" sc="5"/>
+                        <p e="7" v="0" sc="5"/>
+                      </o>
+                    </cir>
+                </script>
+                <script type="application/json">
+                    {
+                        "controls": [
+                            { "component": "r:0", "param": "resistance", "label": "Resistance", "min": 100, "max": 100000, "scale": "log", "unit": "Ω" },
+                            { "component": "c:0", "param": "capacitance", "label": "Capacitance", "min": 1e-9, "max": 1e-5, "scale": "log", "unit": "F" }
+                        ]
+                    }
+                </script>
+            </circuit-snippet>
+        </div>
+
+        <h2>Cutoff Frequency</h2>
+        <p>
+            Same formula as <a href="ac-coupling.html">AC coupling</a>:
+        </p>
+        <div class="formula">f<sub>c</sub> = 1 / (2&pi;RC)</div>
+        <p>
+            Below cutoff, signal passes at full amplitude. Above cutoff,
+            it rolls off at 20dB per decade.
+        </p>
+
+        <h2>Same Circuit, Different Tap</h2>
+        <p>
+            This is the exact same RC network as <a href="ac-coupling.html">AC coupling</a>.
+            The only difference is where you take the output:
+        </p>
+        <ul>
+            <li><strong>Across the capacitor</strong> &rarr; lowpass (this page)</li>
+            <li><strong>Across the resistor</strong> &rarr; highpass (AC coupling)</li>
+        </ul>
+        <p>
+            Same components, same cutoff frequency, complementary responses.
+        </p>
+
+        <p><a href="../index.html">&larr; Signal Path</a></p>
+    </main>
+</body>
+</html>

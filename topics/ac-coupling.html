@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC Coupling — Signal Path</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="../../circuit-snippet/dist/circuit-snippet.js"></script>
+</head>
+<body>
+    <main>
+        <h1>AC Coupling</h1>
+        <p class="subtitle">Block DC, pass AC — the most common filter in audio circuits</p>
+
+        <h2>What It Does</h2>
+        <p>
+            A capacitor in series with the signal path blocks any DC component and
+            passes AC through. The capacitor charges up to the DC level, then only
+            the changing part of the signal appears on the other side.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <ul>
+            <li>Removes DC offset between circuit stages so each stage can set its own bias point</li>
+            <li>Protects downstream inputs from unexpected DC voltages</li>
+            <li>Lets you chain modules without worrying about DC accumulation</li>
+        </ul>
+
+        <h2>The Circuit</h2>
+        <p>
+            A series capacitor and a resistor to ground form a high-pass filter.
+            Signals above the cutoff frequency pass through; signals below get attenuated.
+            Adjust the component values and watch the output change.
+        </p>
+
+        <div class="circuit-embed">
+            <circuit-snippet width="700" height="450" display-time="0.022">
+                <script type="text/xml">
+                    <cir f="1" ts="0.000005" ic="10.20027730826997" cb="50" pb="50" vr="5" mts="5e-11">
+                      <v x="96 176 96 272" f="0" wf="1" fr="100" maxv="2"/>
+                      <g x="96 272 96 288" f="0"/>
+                      <w x="96 176 192 176" f="0"/>
+                      <c x="192 176 320 176" f="0" c="0.00001"/>
+                      <w x="320 176 416 176" f="0"/>
+                      <r x="320 176 320 272" f="0" r="1000"/>
+                      <g x="320 272 320 288" f="0"/>
+                      <O x="416 176 480 176" f="0" sc="0"/>
+                      <o en="2" sp="16" f="x3" p="0">
+                        <p v="0" sc="5"/>
+                        <p e="7" v="0" sc="5"/>
+                      </o>
+                    </cir>
+                </script>
+                <script type="application/json">
+                    {
+                        "controls": [
+                            { "component": "c:0", "param": "capacitance", "label": "Capacitance", "min": 1e-9, "max": 1e-5, "scale": "log", "unit": "F" },
+                            { "component": "r:0", "param": "resistance", "label": "Resistance", "min": 100, "max": 100000, "scale": "log", "unit": "Ω" }
+                        ]
+                    }
+                </script>
+            </circuit-snippet>
+        </div>
+
+        <h2>Cutoff Frequency</h2>
+        <p>
+            The cutoff frequency is the point where the output drops to 70.7% (−3dB) of the input:
+        </p>
+        <div class="formula">f<sub>c</sub> = 1 / (2&pi;RC)</div>
+        <p>
+            Below cutoff, the signal attenuates at 20dB per decade.
+            Above cutoff, everything passes through at full amplitude.
+        </p>
+
+        <h2>Rules of Thumb</h2>
+        <ul>
+            <li><code>1&mu;F + 10k&Omega;</code> &rarr; f<sub>c</sub> &asymp; 16 Hz — good general-purpose audio coupling</li>
+            <li><code>100nF + 10k&Omega;</code> &rarr; f<sub>c</sub> &asymp; 160 Hz — passes mid and high frequencies</li>
+            <li><code>10&mu;F + 1k&Omega;</code> &rarr; f<sub>c</sub> &asymp; 16 Hz — same cutoff, lower impedance path</li>
+        </ul>
+        <p>
+            For eurorack audio signals, aim for a cutoff well below 20 Hz so you
+            don't lose any audible content. <code>1&mu;F</code> into a typical
+            <code>100k&Omega;</code> input impedance gives f<sub>c</sub> &asymp; 1.6 Hz — plenty of margin.
+        </p>
+
+        <p><a href="../index.html">&larr; Signal Path</a></p>
+    </main>
+</body>
+</html>
