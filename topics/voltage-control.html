@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltage Control / CV — Signal Path</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <main>
+        <h1>Voltage Control / CV</h1>
+        <p class="subtitle">Use voltage to control other parts of a modular synth</p>
+
+        <h2>What It Is</h2>
+        <p>
+            In a modular synth, control voltage usually called CV is just a
+            voltage used as a message. Instead of carrying sound to your ears, it
+            tells some other part of the system what to do.
+        </p>
+        <p>
+            A changing voltage can raise pitch, open a filter, move a VCA, change
+            an LFO speed, or sweep almost any parameter that has a CV input.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <ul>
+            <li>It is how modules talk to each other</li>
+            <li>It lets one signal shape another signal</li>
+            <li>It turns a fixed patch into something animated and playable</li>
+        </ul>
+
+        <h2>Audio vs CV</h2>
+        <p>
+            Audio and CV are not two different substances. Both are just voltage
+            changing over time. The main difference is how fast they change and
+            what you use them for.
+        </p>
+        <ul>
+            <li><strong>Slow voltage</strong> &rarr; usually used as control</li>
+            <li><strong>Fast voltage</strong> &rarr; usually heard as audio</li>
+        </ul>
+        <p>
+            This is why an LFO can become audio if you turn it up fast enough, and
+            why an oscillator can be used as a modulation source at audio rate.
+        </p>
+
+        <h2>Common Kinds Of CV</h2>
+        <ul>
+            <li><strong>Pitch CV:</strong> tells an oscillator what note to play. In Eurorack this is usually <code>1V/oct</code>.</li>
+            <li><strong>Gate:</strong> a voltage that stays high while a note is on.</li>
+            <li><strong>Trigger:</strong> a short pulse used to start an event.</li>
+            <li><strong>Envelope:</strong> a shaped control signal that rises and falls over time.</li>
+            <li><strong>LFO:</strong> a repeating slow control signal for wobble, movement, and rhythm.</li>
+            <li><strong>Random CV:</strong> changing voltage used for variation and unpredictability.</li>
+        </ul>
+
+        <h2>Common Voltage Ranges</h2>
+        <p>
+            Different modules use different voltage ranges, so do not assume every
+            CV input wants the same thing.
+        </p>
+        <ul>
+            <li><code>0V to +5V</code> is common for envelopes, gates, and many modulation signals</li>
+            <li><code>-5V to +5V</code> is common for bipolar LFOs and centered modulation</li>
+            <li><code>1V/oct</code> pitch CV uses voltage differences to represent note spacing</li>
+        </ul>
+        <p>
+            Always check the module documentation if voltage range matters. Some
+            inputs clip gently, some ignore excess voltage, and some behave
+            differently once you go past the expected range.
+        </p>
+
+        <h2>Unipolar vs Bipolar</h2>
+        <p>
+            A <strong>unipolar</strong> control signal stays on one side of 0V, for
+            example <code>0V to +5V</code>. A <strong>bipolar</strong> signal swings
+            above and below 0V, for example <code>-5V to +5V</code>.
+        </p>
+        <p>
+            This matters because some destinations expect a positive-only control
+            signal, while others make more sense with movement around a center point.
+        </p>
+
+        <h2>Attenuation And Offset</h2>
+        <p>
+            Two of the most useful CV tools are attenuation and offset.
+        </p>
+        <ul>
+            <li><strong>Attenuation:</strong> makes the CV smaller</li>
+            <li><strong>Offset:</strong> shifts the whole CV up or down</li>
+        </ul>
+        <p>
+            Example: if an LFO is swinging from <code>-5V to +5V</code> but your
+            destination wants <code>0V to +5V</code>, you can reduce the depth and
+            add positive offset to move it into the useful range.
+        </p>
+
+        <h2>DC Coupling</h2>
+        <p>
+            CV paths usually need to be <strong>DC-coupled</strong>. That means
+            steady voltages are allowed to pass through. If you AC-couple a CV
+            path, slow control signals can droop, distort, or disappear.
+        </p>
+        <p>
+            That is why audio outputs are often AC-coupled, while CV inputs and
+            outputs usually are not.
+        </p>
+
+        <h2>Rules Of Thumb</h2>
+        <ul>
+            <li>CV is just voltage used as a message</li>
+            <li>Pitch, gates, envelopes, and LFOs are all forms of CV</li>
+            <li>Audio can be used as fast CV, and slow CV can become audio if it speeds up enough</li>
+            <li>Check whether a signal is unipolar or bipolar before patching it somewhere important</li>
+            <li>Use attenuation and offset to make modulation fit the destination</li>
+            <li>Use DC coupling for CV paths unless you specifically want to remove slow or steady voltage</li>
+        </ul>
+
+        <p><a href="../index.html">&larr; Signal Path</a></p>
+    </main>
+</body>
+</html>

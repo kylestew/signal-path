@@ -10,27 +10,27 @@
 <body>
     <main>
         <h1>RC Lowpass Filter</h1>
-        <p class="subtitle">Pass lows, cut highs — the simplest filter in analog electronics</p>
+        <p class="subtitle">Keep the slow parts, reduce the fast parts</p>
 
         <h2>What It Does</h2>
         <p>
-            Resistor in series, capacitor to ground. At low frequencies the cap
-            is effectively open, so the signal passes through. At high frequencies
-            the cap is a short to ground and the signal gets shunted away.
+            An RC lowpass filter smooths out fast changes. Low frequencies mostly
+            stay in the signal, while high frequencies are reduced.
         </p>
 
         <h2>Why It Matters</h2>
         <ul>
-            <li>Smooths noisy signals — strips out high-frequency hash</li>
-            <li>Anti-aliasing before an ADC — prevents foldback artifacts</li>
-            <li>Tone control — roll off treble in audio paths</li>
-            <li>Power supply filtering — clean up ripple on DC rails</li>
+            <li>Reduces high-frequency noise on a signal</li>
+            <li>Softens treble in an audio path</li>
+            <li>Helps clean up ripple or noise on a power rail</li>
+            <li>Can limit bandwidth before an ADC</li>
         </ul>
 
         <h2>The Circuit</h2>
         <p>
-            Signal passes through the resistor, then the capacitor shunts
-            high frequencies to ground. Output is taken across the capacitor.
+            The signal goes through a resistor, and a capacitor connects the output
+            node to ground. As frequency rises, the capacitor pulls more of the
+            signal away. The output is taken at the junction of the resistor and capacitor.
         </p>
 
         <div class="circuit-embed">
@@ -64,25 +64,26 @@
 
         <h2>Cutoff Frequency</h2>
         <p>
-            Same formula as <a href="ac-coupling.html">AC coupling</a>:
+            The cutoff frequency tells you where the filter starts noticeably reducing the highs:
         </p>
         <div class="formula">f<sub>c</sub> = 1 / (2&pi;RC)</div>
         <p>
-            Below cutoff, signal passes at full amplitude. Above cutoff,
-            it rolls off at 20dB per decade.
+            At the cutoff point, the output is about 70.7% of the input. Well
+            below it, the signal is mostly unchanged. Above it, the filter rolls
+            off at 20dB per decade.
         </p>
 
-        <h2>Same Circuit, Different Tap</h2>
+        <h2>Related To AC Coupling</h2>
         <p>
-            This is the exact same RC network as <a href="ac-coupling.html">AC coupling</a>.
-            The only difference is where you take the output:
+            This filter and <a href="ac-coupling.html">AC coupling</a> use the same
+            two parts, but they are arranged to do opposite jobs:
         </p>
         <ul>
-            <li><strong>Across the capacitor</strong> &rarr; lowpass (this page)</li>
-            <li><strong>Across the resistor</strong> &rarr; highpass (AC coupling)</li>
+            <li><strong>Lowpass:</strong> resistor first, capacitor to ground, output at their junction</li>
+            <li><strong>High-pass / AC coupling:</strong> capacitor first, resistor to ground, output at their junction</li>
         </ul>
         <p>
-            Same components, same cutoff frequency, complementary responses.
+            Same kind of parts, same cutoff formula, opposite result.
         </p>
 
         <p><a href="../index.html">&larr; Signal Path</a></p>

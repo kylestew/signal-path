@@ -10,28 +10,28 @@
 <body>
     <main>
         <h1>Voltage Follower</h1>
-        <p class="subtitle">Unity-gain buffer — same voltage out, but with muscle behind it</p>
+        <p class="subtitle">Same voltage out, but better able to drive the next stage</p>
 
         <h2>What It Does</h2>
         <p>
-            An op-amp with its output wired straight back to the inverting input.
-            Gain is exactly 1&times; — the output voltage follows the input.
-            The point isn't amplification, it's <em>impedance transformation</em>:
-            high input impedance in, low output impedance out.
+            A voltage follower copies the input voltage to the output without
+            trying to make it bigger. Its job is buffering: the source sees an
+            easy load, and the next stage gets a stronger driver.
         </p>
 
         <h2>Why It Matters</h2>
         <ul>
-            <li>Prevents a low-impedance load from dragging down a high-impedance source</li>
-            <li>Isolates circuit stages so they don't interfere with each other</li>
-            <li>Lets sensitive signals (like from a guitar pickup or sensor) drive cables and downstream circuits without signal loss</li>
+            <li>Stops the next stage from loading down the source</li>
+            <li>Keeps one part of the circuit from interfering with another</li>
+            <li>Lets weak or sensitive sources drive cables and downstream inputs more cleanly</li>
         </ul>
 
         <h2>The Circuit</h2>
         <p>
             Input goes to the non-inverting (+) pin. Output connects directly
             back to the inverting (&minus;) pin — 100% negative feedback.
-            Output tracks input exactly.
+            Output tracks input. The op-amp still needs power rails even though
+            they are not shown in this simple drawing.
         </p>
 
         <div class="circuit-embed">
@@ -66,20 +66,23 @@
 
         <h2>Buffer vs Follower</h2>
         <p>
-            "Voltage follower" and "buffer" mean the same thing in practice.
+            In everyday use, "voltage follower" and "buffer" usually mean the same thing.
             "Follower" describes the behavior (output follows input).
             "Buffer" describes the purpose (isolate stages).
-            An emitter follower (BJT) does the same job — slightly less
-            precise but no op-amp needed.
+            An emitter follower or source follower can do a similar buffering job,
+            but it does not copy the voltage as exactly as an op-amp follower.
         </p>
 
         <h2>When You Need One</h2>
         <ul>
-            <li>Before a long cable run — cable capacitance won't load the source</li>
-            <li>After a potentiometer — so the pot's position doesn't change depending on what's downstream</li>
-            <li>Between a high-impedance sensor/pickup and a low-impedance input</li>
-            <li>At eurorack module outputs — standardizes output impedance (~1k&Omega;)</li>
+            <li>Before a long cable run</li>
+            <li>After a potentiometer</li>
+            <li>Between a high-impedance source and a lower-impedance input</li>
+            <li>At a module output that needs to drive the next module cleanly</li>
         </ul>
+        <p>
+            Plain English: same voltage, less interaction, fewer loading problems.
+        </p>
 
         <p><a href="../index.html">&larr; Signal Path</a></p>
     </main>

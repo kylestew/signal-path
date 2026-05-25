@@ -10,34 +10,42 @@
 <body>
     <main>
         <h1>AC Coupling</h1>
-        <p class="subtitle">Block DC, pass AC — the most common filter in audio circuits</p>
+        <p class="subtitle">Block DC, pass changing signals — a basic tool in audio circuits</p>
 
         <h2>What It Does</h2>
         <p>
-            A capacitor in series with the signal path blocks any DC component and
-            passes AC through. The capacitor charges up to the DC level, then only
-            the changing part of the signal appears on the other side.
+            AC coupling removes a steady voltage offset and lets the changing part
+            of the signal continue on. In audio terms: it removes unwanted DC
+            offset while keeping the audio signal.
         </p>
 
         <h2>Why It Matters</h2>
         <ul>
-            <li>Removes DC offset between circuit stages so each stage can set its own bias point</li>
-            <li>Protects downstream inputs from unexpected DC voltages</li>
-            <li>Lets you chain modules without worrying about DC accumulation</li>
+            <li>Keeps one stage's DC offset from being forced into the next stage</li>
+            <li>Helps protect downstream inputs from unwanted DC voltage</li>
+            <li>Common in audio paths where you want the sound, but not the offset</li>
         </ul>
+        <p>
+            Important: AC coupling is usually for audio, not control voltage.
+            If you AC-couple pitch CV, envelopes, gates, or other slow signals,
+            you will distort or remove the part you care about.
+        </p>
 
         <h2>The Circuit</h2>
         <p>
-            A series capacitor and a resistor to ground form a high-pass filter.
-            Signals above the cutoff frequency pass through; signals below get attenuated.
-            Adjust the component values and watch the output change.
+            The simplest AC-coupling circuit is a capacitor in series with the
+            signal and a resistor to ground at the output. Together they make a
+            high-pass filter: very slow changes are reduced, faster changes pass
+            more easily. In many real circuits, that resistor is just the input
+            resistance of the next stage. In this example, the source has a DC
+            offset so you can see the capacitor remove it.
         </p>
 
         <div class="circuit-embed">
             <circuit-snippet width="700" height="450" display-time="0.022">
                 <script type="text/xml">
                     <cir f="1" ts="0.000005" ic="10.20027730826997" cb="50" pb="50" vr="5" mts="5e-11">
-                      <v x="96 176 96 272" f="0" wf="1" fr="100" maxv="2"/>
+                      <v x="96 176 96 272" f="0" wf="1" fr="100" maxv="2" bias="1.5"/>
                       <g x="96 272 96 288" f="0"/>
                       <w x="96 176 192 176" f="0"/>
                       <c x="192 176 320 176" f="0" c="0.00001"/>
@@ -54,6 +62,7 @@
                 <script type="application/json">
                     {
                         "controls": [
+                            { "component": "v:0", "param": "bias", "label": "DC Offset", "min": -3, "max": 3, "scale": "linear", "unit": "V" },
                             { "component": "c:0", "param": "capacitance", "label": "Capacitance", "min": 1e-9, "max": 1e-5, "scale": "log", "unit": "F" },
                             { "component": "r:0", "param": "resistance", "label": "Resistance", "min": 100, "max": 100000, "scale": "log", "unit": "Ω" }
                         ]
@@ -64,12 +73,13 @@
 
         <h2>Cutoff Frequency</h2>
         <p>
-            The cutoff frequency is the point where the output drops to 70.7% (−3dB) of the input:
+            The cutoff frequency tells you where the filter starts noticeably reducing the signal:
         </p>
         <div class="formula">f<sub>c</sub> = 1 / (2&pi;RC)</div>
         <p>
-            Below cutoff, the signal attenuates at 20dB per decade.
-            Above cutoff, everything passes through at full amplitude.
+            At the cutoff point, the output is about 70.7% of the input. Below
+            that, the signal keeps dropping at 20dB per decade. Well above it,
+            the signal is only lightly affected.
         </p>
 
         <h2>Rules of Thumb</h2>
@@ -80,8 +90,9 @@
         </ul>
         <p>
             For eurorack audio signals, aim for a cutoff well below 20 Hz so you
-            don't lose any audible content. <code>1&mu;F</code> into a typical
-            <code>100k&Omega;</code> input impedance gives f<sub>c</sub> &asymp; 1.6 Hz — plenty of margin.
+            do not lose bass or add unwanted tilt to the waveform. <code>1&mu;F</code>
+            into a typical <code>100k&Omega;</code> input impedance gives
+            f<sub>c</sub> &asymp; 1.6 Hz, which is comfortably below the audio band.
         </p>
 
         <p><a href="../index.html">&larr; Signal Path</a></p>
